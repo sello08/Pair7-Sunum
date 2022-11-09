@@ -1,0 +1,35 @@
+
+     <br>
+    <div class="row" *ngIf="isClicked">
+      <div class="col"></div>
+      <div class="col"*ngIf="service != null"><input class="form-control form-control-lg" [(ngModel)]="service.name"/></div>
+      <div class="col"*ngIf="service != null">    <button class="btn btn-secondary" (click)="service.id ? updateService() : addService(service)">{{ service.id ? "Update" : "Add"}}</button></div>
+
+    </div>   
+  <hr>
+
+<div class="container" >
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-secondary" (click)="add()">Add a new service</button>
+  </div> 
+<div class="row">
+  <div class="col-1"></div>
+  <div class="col-9"> <div class="list-group w-auto" *ngFor="let service of services" > 
+    <a class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">{{service.id}}-{{service.name}}</h6>
+        </div>
+      
+        <div  *ngIf="service.id != null">
+          <button class="btn btn-secondary"(click)="update(service)">Update</button>
+          <button class="btn btn-danger"(click)="deleteService(service.id)">Delete</button>
+          </div>
+      </div>
+    </a>
+  </div></div>
+  <div class="col-2"></div>
+</div>
+ 
+</div>
+ 

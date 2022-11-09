@@ -1,0 +1,85 @@
+
+
+<div class="container2">
+  <div class="content">
+      <div *ngIf="customerType" class="customer-type"> 
+          <h6> 
+              <button (click)="typeSelection(true)" class="btn-indCustomer">Individual Customers</button>
+          </h6>
+  
+          <h6>
+              <button (click)="typeSelection(false)" class="btn-corpCustomer">Corporate Customers</button>
+          </h6>
+      
+          <div *ngIf="activeForm" class="customer-Form1"> 
+
+              <form [formGroup]="individualForm">
+
+              <label>First Name</label>
+              <input type="text" formControlName="firstName">
+              <br>
+              <label>Last Name</label>
+              <input type="text" formControlName="lastName">
+              <br>
+              <label>National ID</label>
+              <input type="number" formControlName="nationalIdentity">
+              <br>
+              <label>Birth Date</label>
+              <input type="date" formControlName="birthDate">
+          
+              <button class="form-next1" type="submit" [disabled]="!individualForm.valid" (click)="addIndCustomer()">Next</button>
+              </form>
+          </div>
+           <div *ngIf="!activeForm" class="customer-Form2"> 
+                  <form [formGroup]="corporateForm">
+                  <label>Company Name</label>
+                  <input type="text" formControlName="companyName">
+                  <br>
+                  <label>Tax Number</label>
+                  <input type="number" formControlName="taxNumber">
+                  <button class="form-next" type="button" [disabled]="!corporateForm.valid" (click)="addCorpCustomer()">Next</button>
+                  </form>
+          </div>
+          
+      </div>
+      <div *ngIf="servicelist" class="services">
+        <ul>
+            <li (click)="selectedService = service" class="btn-services" *ngFor="let service of services"> {{service.id}} - {{service.name}}</li>
+            <button class="form-next" type="button"  (click)="addService()">Next</button>
+                
+        </ul>
+    </div>
+    <div *ngIf="customerInfos" class="customer-infos">
+        <h4>Customer</h4>
+        <span *ngIf="showIndCustomer">
+             First Name: {{indCustomerSave[0].firstName}}
+             <br>
+             Last Name: {{indCustomerSave[0].lastName}}
+             <br>
+             Birth Date:{{indCustomerSave[0].birthDate}}
+             <br>
+             National ID: {{indCustomerSave[0].nationalIdentity}}
+             <br>
+                
+        </span>
+        <span *ngIf="showCorpCustomer">
+            companyName : {{corpCustomerSave[0].companyName}}
+            <br>
+             Tax Number : {{corpCustomerSave[0].taxNumber}}
+             <br>
+        </span>
+        <span>
+            <h4>Service</h4>
+            {{serviceSave[0].id}}-{{serviceSave[0].name}}
+            
+        </span>
+        <br>
+        <button routerLink="/customers" (click)="saveCustomer()">Save</button>
+    </div>
+ 
+    </div>
+
+
+</div>
+
+

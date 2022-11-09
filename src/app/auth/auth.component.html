@@ -1,0 +1,42 @@
+<!-- Email input -->
+
+<div class="row align-items-center">
+  <div class="col">
+    <figure class="image is-128x128">
+      <img class="is-rounded" src="../../assets/image/app.PNG">
+    </figure>
+
+  </div>
+  <div class="col">
+
+    <form [formGroup]="authForm">
+      <igx-input-group>
+
+        <input igxInput name="userName" type="text"  formControlName="userName" [(ngModel)]="userName" />
+
+        <label  igxLabel for="userName"  >Full Name</label>
+
+        <igx-suffix>
+          <igx-icon>person</igx-icon>
+        </igx-suffix>
+
+      </igx-input-group>
+
+      <igx-input-group>
+        <input igxInput name="password" type="text" formControlName="password" [(ngModel)]="password" />
+        <label igxLabel for="password">password</label>
+        <igx-suffix>
+          <igx-icon>key</igx-icon>
+        </igx-suffix>
+      </igx-input-group>
+
+      <br />
+
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-primary me-md-2" type="submit" (click)="singUpAdd()" [disabled]="authForm.invalid">{{isLoginMode ? "Login" :"Register" }} </button>
+        <button class="btn btn-primary me-ms-2" type="button" (click)="onToggleMode()">Toggle to {{isLoginMode ? "Register" : "Login" }}</button>
+      </div>
+    </form>
+  </div>
+  <div class="col"></div>
+</div>
