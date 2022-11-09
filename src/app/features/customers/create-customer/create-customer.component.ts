@@ -183,7 +183,7 @@ getService(){
         
         
     }
-    else if(this.indCustomerSave){
+    if(this.indCustomerSave){
       
       const customerId = Math.round(Math.random()*100);
 

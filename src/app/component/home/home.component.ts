@@ -15,6 +15,5 @@ export class HomeComponent implements OnInit {
 
   loggedin(){
     return localStorage.getItem('token');
-
   }
 }
