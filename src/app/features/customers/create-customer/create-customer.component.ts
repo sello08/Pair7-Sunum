@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators,FormBuilder,FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CorporateCustomers, CustomersService, IndividualCustomers, Invoice, Service, ServicesService } from 'src/libs';
 
 import { Store } from '@ngrx/store';
 import {  Observable } from 'rxjs';
-import { addCorpCustomer, addIndCustomer } from '../../../store/actions/customer.actions';
-import { indCustomerSelector, corpCustomerSelector } from '../../../store/selectors/customer.selector';
-import { serviceSelector } from '../../../store/selectors/service.selector';
-import { addService } from '../../../store/actions/service.actions';
+import { setCorporateCustomer, setIndividualCustomer, setService } from '../../../store/customer.actions';
+import { indCustomerSelector, corpCustomerSelector, serviceSelector,  } from '../../../store/customer.selector';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -32,14 +30,14 @@ export class CreateCustomerComponent implements OnInit {
   servicelist : boolean = false;
   selectedService !: Service ;
   selectedIndCustomer !: IndividualCustomers ;
-  selectedCorpCustomers !: CorporateCustomers;
-  customerInfos : boolean = false;
-  serviceSelection !: Observable<Service[]>
-  indCustomerSelection !: Observable<IndividualCustomers[]>
-  corpCustomerSelection !: Observable<CorporateCustomers[]>
-  serviceSave  !: Service[];
-  indCustomerSave  !: IndividualCustomers[];
-  corpCustomerSave  !: CorporateCustomers[];
+  selectedCorpCustomer !: CorporateCustomers;
+  showCustomerInfos : boolean = false;
+  serviceSelection !: Observable<Service | null>
+  indCustomerSelection !: Observable<IndividualCustomers | null>
+  corpCustomerSelection !: Observable<CorporateCustomers | null>
+  serviceSave  !: Service | null;
+  indCustomerSave  !: IndividualCustomers | null
+  corpCustomerSave  !: CorporateCustomers | null
   deneme !: CorporateCustomers;
   deneme3 !: Invoice;
   deneme2 !: IndividualCustomers;
@@ -97,7 +95,7 @@ getService(){
      this.servicelist = true;
    }
    onSubmitCorporate(){
-     this.individualForm.reset();
+     this.corporateForm.reset();
      this.customerType = false;
      this.servicelist = true;
    }
@@ -112,7 +110,7 @@ getService(){
       return;
     }
 
-    this.store.dispatch(addIndCustomer({
+    this.store.dispatch(setIndividualCustomer({
       customer: this.individualForm.value as IndividualCustomers
     }));
 
@@ -120,6 +118,7 @@ getService(){
     
 
     this.onSubmitIndividual();
+
    }
 
    addCorpCustomer(){
@@ -127,22 +126,26 @@ getService(){
       return;
     }
 
-    this.store.dispatch(addCorpCustomer({
+    this.store.dispatch(setCorporateCustomer({
       customer: this.corporateForm.value as CorporateCustomers
     }));
 
-    this.selectedCorpCustomers = this.corporateForm.value as CorporateCustomers
-
+    this.selectedCorpCustomer = this.corporateForm.value as CorporateCustomers
+    
     this.onSubmitCorporate();
    }
 
 
    addService(){
     this.servicelist = false
-    this.customerInfos = true
+    this.showCustomerInfos = true // seçilen customera ait bilgileri save ekranında gösterir....
+    if(this.selectedCorpCustomer){
+      this.showCorpCustomer = true;
+    }else if(this.selectedIndCustomer){
+      this.showIndCustomer = true;
+    }
 
-
-    this.store.dispatch(addService({
+    this.store.dispatch(setService({
       service: this.selectedService
     }));
 
@@ -159,13 +162,11 @@ getService(){
     this.corpCustomerSelection = this.store.select(corpCustomerSelector)
     this.corpCustomerSelection.subscribe(response => {this.corpCustomerSave = response})
    }
-
-
    saveCustomer(){
-    if(this.corpCustomerSave.length > 0){
+    if(this.corpCustomerSave){
       const customerId = Math.round(Math.random()*100);
 
-      this.customerService.addCorporateCustomer({...this.corpCustomerSave[0], customerId: customerId})
+      this.customerService.addCorporateCustomer({...this.corpCustomerSave, customerId: customerId})
       .subscribe(response => {
         this.deneme = response;
         this.toastr.success('Customer başarıyla eklendi')
@@ -177,16 +178,16 @@ getService(){
           this.customerService.addInvoices(response.id).subscribe(response => {
             this.deneme3 = response
             this.toastr.success('Invoice başarıyla eklendi')
-            this.corpCustomerSave = [];
           }, this.catchError)
         }, this.catchError);
         
+        
     }
-    else if(this.indCustomerSave.length > 0){
+    else if(this.indCustomerSave){
       
       const customerId = Math.round(Math.random()*100);
 
-      this.customerService.addIndividualCustomer({...this.indCustomerSave[0], customerId: customerId})
+      this.customerService.addIndividualCustomer({...this.indCustomerSave, customerId: customerId})
       .subscribe(response => {
         this.deneme2 = response
         this.toastr.success('Customer başarıyla eklendi')
@@ -198,7 +199,6 @@ getService(){
           this.customerService.addInvoices(response.id).subscribe(response => {
             this.deneme3 = response;
             this.toastr.success('Invoice başarıyla eklendi')
-            this.indCustomerSave = [];
           }, this.catchError)
         }, this.catchError);
         

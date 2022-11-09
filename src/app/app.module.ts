@@ -22,14 +22,11 @@ import { HomeComponent } from './component/home/home.component';
 import { LoginService } from 'src/libs';
 import { DetailCustomerComponent } from './component/detail-customer/detail-customer.component';
 import { StoreModule } from '@ngrx/store';
-import { indCustomerReducer, corpCustomerReducer } from './store/reducers/customer.reducer';
-import { serviceReducer } from './store/reducers/services.reducer';
+import { customerReducer } from './store/customer.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 
 //STORE
-import { AppStoreState } from './store/app.state';
-import { appReducers } from './store/app.reducer';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -69,10 +66,7 @@ import { environment } from 'src/environments/environment';
 
       // StoreModule.forRoot<AppStoreState>(appReducers)
      
-      StoreModule.forRoot({}),
-      StoreModule.forFeature('indCustomer', indCustomerReducer),
-      StoreModule.forFeature('corpCustomer', corpCustomerReducer),
-      StoreModule.forFeature('service', serviceReducer),
+      StoreModule.forRoot({'customer': customerReducer}),
 
       StoreDevtoolsModule.instrument({
         maxAge: 25, // Retains last 25 states

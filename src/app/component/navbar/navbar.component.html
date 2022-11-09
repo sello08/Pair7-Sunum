@@ -1,13 +1,19 @@
 <!-- // NAVBAR -->
 
-
 <nav class="navbar is-light" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" routerLink="/">Home
+    <a class="navbar-item" routerLink="/"
+      >Home
       <!-- <img src="" width="50" height="250"> -->
     </a>
 
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    <a
+      role="button"
+      class="navbar-burger"
+      aria-label="menu"
+      aria-expanded="false"
+      data-target="navbarBasicExample"
+    >
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -16,11 +22,11 @@
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" *ngIf="loggedin()"routerLink="/customers">
-      Customers
+      <a class="navbar-item" *ngIf="loggedin()" routerLink="/customers">
+        Customers
       </a>
       <a class="navbar-item" *ngIf="loggedin()" routerLink="/services">
-       Services
+        Services
       </a>
       <!-- <a class="navbar-item" *ngIf="loggedin()"routerLink="/roles">
        Roles
@@ -30,13 +36,18 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-        
-          <button *ngIf="!loggedin()"  class="button is-link is-light" routerLink="/auth">Login</button>
-          <button *ngIf="loggedin()" class="button is-link "  (click)="onLogut()">Logut</button>
-     
+          <button
+            *ngIf="!loggedin()"
+            class="button is-link is-light"
+            routerLink="/auth"
+          >
+            Log In
+          </button>
+          <button *ngIf="loggedin()" class="button is-link" (click)="onLogut()">
+            Log Out
+          </button>
         </div>
       </div>
     </div>
   </div>
 </nav>
-
