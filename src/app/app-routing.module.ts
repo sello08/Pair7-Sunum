@@ -1,11 +1,8 @@
-import { Component, NgModule } from '@angular/core';
+import {  NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/libs/guards/auth.guard';
 import { LoginGuard } from 'src/libs/guards/login.guard';
-import { RolesComponent } from './features/roles/roles.component';
-import { ServicesComponent } from './features/service/services.component';
 import { HomeComponent } from './component/home/home.component';
-import { NavbarComponent } from './component/navbar/navbar.component';
 import { NotFoundComponent } from './component/not-found/not-found.component';
 import { DetailCustomerComponent } from './component/detail-customer/detail-customer.component';
 
@@ -46,10 +43,7 @@ const routes: Routes = [
     path:"customers/details/:id", component:DetailCustomerComponent
     ,canActivate: [AuthGuard]
   },
-  {
-    path:"roles",
-    loadChildren: () => import('./features/roles/roles.module').then(m => m.RolesModule)
-  },
+  
 
   {
     path: "**",

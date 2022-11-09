@@ -43,9 +43,9 @@
           <input type="text" formControlName="companyName" />
           <br />
           <label>Tax Number</label>
-          <input type="number" formControlName="taxNumber" />
+          <input class="tax-input" type="number" formControlName="taxNumber" />
           <button
-            class="form-next"
+            class="form-next2"
             type="button"
             [disabled]="!corporateForm.valid"
             (click)="addCorpCustomer()"
@@ -56,15 +56,17 @@
       </div>
     </div>
     <div *ngIf="servicelist" class="services">
+      <h4 class="services-header">Services</h4>
       <ul>
         <li
+          type="radio"
           (click)="selectedService = service"
           class="btn-services"
           *ngFor="let service of services"
         >
           {{ service.id }} - {{ service.name }}
         </li>
-        <button class="form-next" type="button" (click)="addService()">
+        <button class="form-next3" type="button" (click)="addService()">
           Next
         </button>
       </ul>
@@ -92,7 +94,13 @@
         {{ serviceSave?.id }}-{{ serviceSave?.name }}
       </span>
       <br />
-      <button routerLink="/customers" (click)="saveCustomer()">Save</button>
+      <button
+        class="form-save"
+        routerLink="/customers"
+        (click)="saveCustomer()"
+      >
+        Save
+      </button>
     </div>
   </div>
 </div>

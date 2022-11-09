@@ -15,6 +15,7 @@
   border: 1px solid #888;
   width: 500px;
   height: 600px;
+  border-radius: 15px;
 }
 .customer-type{
 display: flex;
@@ -33,7 +34,7 @@ display: flex;
   border-radius: 10px;
   border: 1px dashed black;
   margin-top: 20px;
-  width: 200px;
+  width: 210px;
 }
 .btn-corpCustomer{
   padding: 10px;
@@ -56,11 +57,14 @@ display: flex;
   padding: 5px;
 }
 .form-next2{
-  margin-top: 210px;
+  margin-top: 214px;
   margin-left: 370px;
   width: 70px;
   border-radius: 10px;
   padding: 5px;
+}
+.form-next3{
+
 }
 label{
   padding: 30px;
@@ -72,4 +76,38 @@ label{
 .btn-services:hover{
   cursor: pointer;
   color: rgb(45, 136, 174);
+}
+label{
+  font-size: 15px;
+  font-weight: bold;
+}
+.tax-input{
+  margin-left: 24px;
+}
+input{
+  border: 1px dotted black;
+  border-bottom: 1px solid black ;
+}
+button{
+border: 1px solid black;
+background-color: white;
+}
+.services-header{
+  text-align: center;
+  margin-top: -80px;
+}
+
+.services button{
+  margin-left: 358px;
+  margin-top: 44px;
+  width: 70px;
+  border-radius: 10px;
+  padding: 5px;
+}
+.form-save{
+  margin-top: 271px;
+  margin-left: 390px;
+  width: 70px;
+  border-radius: 10px;
+  padding: 5px;
 }
