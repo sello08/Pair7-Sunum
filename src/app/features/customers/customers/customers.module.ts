@@ -20,7 +20,7 @@ import {
   declarations: [
 
     CustomersComponent,
-    //pipes
+    
     FirtNamePipe,
     LastNamePipe,
     CustomerIdPipe,
