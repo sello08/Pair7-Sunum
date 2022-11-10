@@ -97,17 +97,9 @@ export class CreateCustomerstp3Component implements OnInit {
         this.router.navigate(['/customers']);
     }
   
-    
-
-
-
     this.toastr.success(  "New Customer Created")
-    this.router.navigate(['/customers/stp3']);
-
-
-
+    this.router.navigate(['/customers/']);
   }
-
   catchError(error: Error) {
     this.toastr.success('Bir hata olustu ' + error.message)
   }

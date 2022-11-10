@@ -18,7 +18,6 @@ const routes: Routes = [
     component: HomeComponent,
 
   },
-
   {
 
     path:"auth",
@@ -31,20 +30,19 @@ const routes: Routes = [
     loadChildren: () => import('./features/service/service.module').then(m => m.ServiceModule)
     , canActivate: [AuthGuard]
   },
-
-
+  {
+    path:"customers/details/:id", component:DetailCustomerComponent
+    ,canActivate: [AuthGuard]
+  },
   {
     path:"customers",
     loadChildren: () => import('./features/customers/customers/customers.module').then(m => m.CustomersModule)
     ,canActivate: [AuthGuard]
   },
-
   {
     path:"customers/details/:id", component:DetailCustomerComponent
     ,canActivate: [AuthGuard]
   },
-  
-
   {
     path: "**",
     component: NotFoundComponent

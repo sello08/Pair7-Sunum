@@ -44,12 +44,12 @@ export class CreateCustomerstp1Component implements OnInit {
   individualForm = new FormGroup({
     firstName: new FormControl('', [Validators.required, Validators.minLength(3),Validators.maxLength(20)]),
     lastName: new FormControl('', [Validators.required, Validators.minLength(3),Validators.maxLength(20)]),
-    nationalIdentity: new FormControl('', [Validators.required,Validators.minLength(3),Validators.maxLength(20)]),
+    nationalIdentity: new FormControl('', [Validators.required,Validators.minLength(10000000000),Validators.maxLength(99999999999)]),
     birthDate: new FormControl('',Validators.required),
   });
   corporateForm = new FormGroup({
     companyName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    taxNumber: new FormControl('null', [Validators.required,Validators.minLength(3),Validators.maxLength(100) ]),
+    taxNumber: new FormControl('null', [Validators.required,Validators.minLength(10000000),Validators.maxLength(99999999) ]),
   });
 
 

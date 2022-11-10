@@ -1,65 +1,80 @@
+<div class="row">
+  <div class="col-3"></div>
+  <div class="col-5">
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+      <h6 class="border-bottom border-gray pb-2 mb-0">New Customers</h6>
+      <div class="media text-muted pt-3" *ngIf="indCustomerSave !== null">
+        <img
+          alt="32x32"
+          class="mr-2 rounded"
+          style="width: 72px; height: 62px"
+          src="../../../../../assets/image/stp1.PNG"
+          data-holder-rendered="true"
+        />
+        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+          <strong class="d-block text-gray-dark">@Customer</strong>
 
-  <div class="row">
-    <div class="col-3"></div>
-    <div class="col-5">  <div class="my-3 p-3 bg-white rounded box-shadow">
-    <h6 class="border-bottom border-gray pb-2 mb-0">New Customers </h6> 
-    <div class="media text-muted pt-3" *ngIf="indCustomerSave!==null">
-
-      <img  alt="32x32" class="mr-2 rounded" style="width: 72px; height: 62px;" src="../../../../../assets/image/stp1.PNG" data-holder-rendered="true">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">@Customer</strong>
-
-        
           First Name: {{ indCustomerSave.firstName }}
           <br />
           Last Name: {{ indCustomerSave.lastName }}
           <br />
           Birth Date:{{ indCustomerSave.birthDate }}
           <br />
-          National ID: {{indCustomerSave.nationalIdentity }}
+          National ID: {{ indCustomerSave.nationalIdentity }}
           <br />
-      </p>
+        </p>
+      </div>
 
+      <div class="media text-muted pt-3" *ngIf="this.corpCustomerSave">
+        <img
+          alt="32x32"
+          class="mr-2 rounded"
+          style="width: 72px; height: 62px"
+          src="../../../../../assets/image/stp1.PNG"
+          data-holder-rendered="true"
+        />
+        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+          <strong class="d-block text-gray-dark">@Customer</strong>
 
-    </div>
-
-    <div class="media text-muted pt-3 " *ngIf="this.corpCustomerSave!==null" >
-
-      <img  alt="32x32" class="mr-2 rounded" style="width: 72px; height: 62px;" src="../../../../../assets/image/stp1.PNG" data-holder-rendered="true">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray" >
-        <strong class="d-block text-gray-dark">@Customer</strong>
-
-    
           companyName : {{ corpCustomerSave.companyName }}
           <br />
           Tax Number : {{ corpCustomerSave.taxNumber }}
           <br />
-           
-      </p>
+        </p>
+      </div>
+      <div class="media text-muted pt-3">
+        <img
+          alt="32x32"
+          class="mr-2 rounded"
+          style="width: 72px; height: 62px"
+          src="../../../../../assets/image/stp2.PNG"
+          data-holder-rendered="true"
+        />
+        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+          <strong class="d-block text-gray-dark">@Service</strong>
+          {{ serviceSave?.id }}-{{ serviceSave?.name }}
+        </p>
+      </div>
+      <div class="media text-muted pt-3">
+        <img
+          alt="32x32"
+          class="mr-2 rounded"
+          style="width: 72px; height: 62px"
+          src="../../../../../assets/image/stp3.PNG"
+          data-holder-rendered="true"
+        />
+        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+          <strong class="d-block text-gray-dark">@Register New Customer</strong>
+          <br />
+          <button
+            (click)="saveCustomer()"
+            class="button is-normal button is-link is-light"
+          >
+            Save
+          </button>
+        </p>
+        <br />
+      </div>
     </div>
-    <div class="media text-muted pt-3">
-      <img  alt="32x32" class="mr-2 rounded" style="width: 72px; height: 62px;" src="../../../../../assets/image/stp2.PNG" data-holder-rendered="true">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">@Service</strong>
-        {{ serviceSave?.id }}-{{ serviceSave?.name }}
-      </p>
-      
-    </div>
-    <div class="media text-muted pt-3">
-      <img  alt="32x32" class="mr-2 rounded" style="width: 72px; height: 62px;" src="../../../../../assets/image/stp3.PNG" data-holder-rendered="true">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">@Register New Customer</strong>
-        <br>
-    <button (click)="saveCustomer()" class="button is-normal button is-link is-light">Save</button>
-      </p>
-      <br>
-    
-    </div>
-   
   </div>
-   </div>
-    <div class="col-3"></div>
-  </div>
-
-
-
+</div>
