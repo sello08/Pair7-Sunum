@@ -1,4 +1,5 @@
 
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable } from 'rxjs'
@@ -56,7 +57,7 @@ connections=environment.api
   }
 
 
-  addCorporateCustomer(customer : CorporateCustomers):Observable<CorporateCustomers>{
+  addCorporateCustomer(customer : any):Observable<CorporateCustomers>{
     return this.http.post<CorporateCustomers>('http://localhost:3000/corporateCustomers', customer)
   }
 

@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CorporateCustomers, CustomersService, IndividualCustomers, Invoice, Service, ServicesService } from 'src/libs';
-
 import { Store } from '@ngrx/store';
 import {  Observable } from 'rxjs';
 import { setCorporateCustomer, setIndividualCustomer, setService } from '../../../store/customer.actions';
 import { indCustomerSelector, corpCustomerSelector, serviceSelector,  } from '../../../store/customer.selector';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
  
@@ -25,7 +23,6 @@ export class CreateCustomerComponent implements OnInit {
   
   showIndCustomer : boolean = false;
   showCorpCustomer : boolean = false;
-  CustomerType : string = "";
   services : Service[] = [];
   servicelist : boolean = false;
   selectedService !: Service ;
@@ -47,7 +44,6 @@ export class CreateCustomerComponent implements OnInit {
   constructor(
     private servicesService : ServicesService,
     private store : Store, 
-    private router: Router, 
     private customerService:CustomersService, 
     private toastr :ToastrService
     ) { }
@@ -74,7 +70,7 @@ getService(){
   })
 }
 
-   typeSelection(value:boolean){
+  typeSelection(value:boolean){
     if(value){
     this.activeForm=true;
     }else{
@@ -105,7 +101,7 @@ getService(){
   }
 
   
-  addIndCustomer(){
+  setIndCustomer(){
     if (this.individualForm.invalid) {
       return;
     }
@@ -121,7 +117,7 @@ getService(){
 
    }
 
-   addCorpCustomer(){
+   setCorpCustomer(){
     if (this.corporateForm.invalid) {
       return;
     }
@@ -153,62 +149,65 @@ getService(){
 
 
     //-------------------- Storedan verilerin çekilmesi. Verileri çekmeden önce observable türünde ve data türü olarak customer veya service olmasına göre interface eklemeleri yapıldı.
-    this.serviceSelection = this.store.select(serviceSelector)
-    this.serviceSelection.subscribe(response => { this.serviceSave = response })
+    
+    this.store.select(serviceSelector).subscribe(response => { this.serviceSave = response })
 
-    this.indCustomerSelection = this.store.select(indCustomerSelector)
-    this.indCustomerSelection.subscribe(response => {this.indCustomerSave = response})
+    //this.indCustomerSelection = this.store.select(indCustomerSelector)
+    this.store.select(indCustomerSelector).subscribe(response => {this.indCustomerSave = response})
 
-    this.corpCustomerSelection = this.store.select(corpCustomerSelector)
-    this.corpCustomerSelection.subscribe(response => {this.corpCustomerSave = response})
+    //this.corpCustomerSelection = this.store.select(corpCustomerSelector)
+    this.store.select(corpCustomerSelector).subscribe(response => {this.corpCustomerSave = response})
    }
-   saveCustomer(){
-    if(this.corpCustomerSave){
+  
+   saveCorpCustomer(){
+    
       const customerId = Math.round(Math.random()*100);
 
-      this.customerService.addCorporateCustomer({...this.corpCustomerSave, customerId: customerId})
+      this.customerService.addCorporateCustomer({...this.corpCustomerSave, customerId})
       .subscribe(response => {
-        this.deneme = response;
-        this.toastr.success('Customer başarıyla eklendi')
-      }, this.catchError)
+        //this.deneme = response;
+       this.toastr.success('Customer başarıyla eklendi')
+        console.log("sello", response);
+      }, (error: Error) => {
+        console.log("hatttaa", error.message);
+        
+      });
+      
 
       this.customerService.addSubscriptions(customerId, this.selectedService.id)
         .subscribe(response => {
-          this.toastr.success('Subscription başarıyla eklendi')
           this.customerService.addInvoices(response.id).subscribe(response => {
             this.deneme3 = response
-            this.toastr.success('Invoice başarıyla eklendi')
-          }, this.catchError)
-        }, this.catchError);
-        
-        
+          })
+        });
+     
     }
-    if(this.indCustomerSave){
-      
-      const customerId = Math.round(Math.random()*100);
-
-      this.customerService.addIndividualCustomer({...this.indCustomerSave, customerId: customerId})
-      .subscribe(response => {
-        this.deneme2 = response
-        this.toastr.success('Customer başarıyla eklendi')
-      }, this.catchError)
-
-       this.customerService.addSubscriptions(customerId, this.selectedService.id)
+    saveIndCustomer(){
+      if(this.indCustomerSave){
+        const customerId = Math.round(Math.random()*100);
+  
+        this.customerService.addIndividualCustomer({...this.indCustomerSave, customerId})
         .subscribe(response => {
-          this.toastr.success('Subscription başarıyla eklendi');
-          this.customerService.addInvoices(response.id).subscribe(response => {
-            this.deneme3 = response;
-            this.toastr.success('Invoice başarıyla eklendi')
-          }, this.catchError)
-        }, this.catchError);
-        
+          this.deneme = response;
+          this.toastr.success('Customer başarıyla eklendi')
+          
+          
+        })
+  
+        this.customerService.addSubscriptions(customerId, this.selectedService.id)
+          .subscribe(response => {
+            this.customerService.addInvoices(response.id).subscribe(response => {
+              this.deneme3 = response
+            })
+          });
+      }
+      console.log("individual customer");
     }
-  
-  }
-
-  catchError(error: Error) {
-    this.toastr.success('Bir hata olustu ' + error.message)
-  }
-  
+    
 }
+
+
+  
+
+
 

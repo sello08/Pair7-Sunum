@@ -31,7 +31,7 @@
             class="form-next1"
             type="submit"
             [disabled]="!individualForm.valid"
-            (click)="addIndCustomer()"
+            (click)="setIndCustomer()"
           >
             Next
           </button>
@@ -48,7 +48,7 @@
             class="form-next2"
             type="button"
             [disabled]="!corporateForm.valid"
-            (click)="addCorpCustomer()"
+            (click)="setCorpCustomer()"
           >
             Next
           </button>
@@ -97,7 +97,7 @@
       <button
         class="form-save"
         routerLink="/customers"
-        (click)="saveCustomer()"
+        (click)="activeForm ? saveIndCustomer() : saveCorpCustomer()"
       >
         Save
       </button>
