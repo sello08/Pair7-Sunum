@@ -25,7 +25,6 @@ export class DetailCustomerComponent implements OnInit {
   constructor(
     private customersService: CustomersService,
      private route: ActivatedRoute, 
-     private router: Router,
      private servicesService:ServicesService
      ) { }
 
@@ -33,11 +32,12 @@ export class DetailCustomerComponent implements OnInit {
 
     this.customerId = Number(this.route.snapshot.paramMap.get('id'));
 
-    if (this.customerId % 2 === 0) {
+   /* if (this.customerId % 2 === 0) {
       this.customerType = false
     } if (this.customerId % 2 === 1) {
       this.customerType = true
     }
+    */
 
     this.individualCustomersSub()
     this.corporateCustomersSub()

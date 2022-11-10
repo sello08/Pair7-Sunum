@@ -2,6 +2,7 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { year } from '@igniteui/material-icons-extended';
 import {Observable } from 'rxjs'
 import { environment } from 'src/environments/environment';
 import { CorporateCustomers } from '../models/corporate-customers';
@@ -16,7 +17,17 @@ import { Subscription } from '../models/subscription';
   providedIn: 'root'
 })
 export class CustomersService {
-connections=environment.api
+
+   dateObj = new Date();
+   month = this.dateObj.getUTCMonth() + 1; //months from 1-12
+   subYear = this.dateObj.getUTCFullYear() + 1
+   day = this.dateObj.getUTCDate();
+   year = this.dateObj.getUTCFullYear();
+
+   newdate = this.year + "-" + this.month + "-" + this.day;
+   subNewDate = this.subYear + "-" + this.month + "-" + this.day;
+
+  connections=environment.api
   constructor(private http:HttpClient) {}
    
 
@@ -70,16 +81,19 @@ connections=environment.api
   }
 
   addSubscriptions(id: number, serviceId : number | undefined):Observable<Subscription>{
-    const data = { customerId: id ,serviceId: serviceId , dateStarted: new Date() }
+
+
+    const data = { customerId: id ,serviceId: serviceId , dateStarted: this.newdate }
     
     return this.http.post<Subscription>('http://localhost:3000/subscriptions', data)
   }
 
   addInvoices(id: number ):Observable<Invoice>{
 
-    let date = new Date()
+    
 
-    const data = { subscriptionId: id , dateCreated: new Date(), dateDue: date.setFullYear(date.getFullYear() + 1)}
+
+    const data = { subscriptionId: id , dateCreated: this.newdate, dateDue: this.subNewDate}
 
     return this.http.post<Invoice>('http://localhost:3000/invoices', data)
   }

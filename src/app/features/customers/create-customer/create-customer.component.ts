@@ -161,7 +161,7 @@ getService(){
   
    saveCorpCustomer(){
     
-      const customerId = Math.round(Math.random()*100);
+      const customerId = Math.round(Math.random()*1000000);
 
       this.customerService.addCorporateCustomer({...this.corpCustomerSave, customerId})
       .subscribe(response => {
@@ -184,7 +184,7 @@ getService(){
     }
     saveIndCustomer(){
       if(this.indCustomerSave){
-        const customerId = Math.round(Math.random()*100);
+        const customerId = Math.round(Math.random()*1000000);
   
         this.customerService.addIndividualCustomer({...this.indCustomerSave, customerId})
         .subscribe(response => {
@@ -199,9 +199,8 @@ getService(){
             this.customerService.addInvoices(response.id).subscribe(response => {
               this.deneme3 = response
             })
-          });
+          }); 
       }
-      console.log("individual customer");
     }
     
 }
