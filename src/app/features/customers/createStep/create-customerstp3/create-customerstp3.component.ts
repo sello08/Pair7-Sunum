@@ -15,18 +15,10 @@ import { ToastrService } from 'ngx-toastr';
 export class CreateCustomerstp3Component implements OnInit {
 
  
-  selectedService !: Service ;
-  selectedIndCustomer !: IndividualCustomers ;
-  selectedCorpCustomer !: CorporateCustomers;
-  serviceSelection !: Observable<Service | null>
-  indCustomerSelection !: Observable<IndividualCustomers | null>
-  corpCustomerSelection !: Observable<CorporateCustomers | null>
+  selectedService !: Service   ;
   serviceSave  !: Service | null;
   indCustomerSave  !: IndividualCustomers | null
   corpCustomerSave  !: CorporateCustomers | null
-  deneme !: CorporateCustomers;
-  deneme3 !: Invoice;
-  deneme2 !: IndividualCustomers;
   subscriptionId !: number;
   
 
@@ -39,30 +31,38 @@ export class CreateCustomerstp3Component implements OnInit {
 
   ngOnInit(): void {
 
-    this.serviceSelection = this.store.select(serviceSelector)
-    this.serviceSelection.subscribe(response => { this.serviceSave = response })
-    console.log(this.serviceSave ,"s")
+    // service ve cseçilen customerın storedan çekilip local değişkenlerde tutulması.....
 
-    this.indCustomerSelection = this.store.select(indCustomerSelector)
-    this.indCustomerSelection.subscribe(response => {this.indCustomerSave = response})
-    console.log(this.indCustomerSave, "i")
 
-    this.corpCustomerSelection = this.store.select(corpCustomerSelector)
-    this.corpCustomerSelection.subscribe(response => {this.corpCustomerSave = response})
-    console.log(this.corpCustomerSave,"c")
+
+    this.store.select(serviceSelector).subscribe(response => { this.serviceSave = response })
+    
+
+    
+    this.store.select(indCustomerSelector).subscribe(response => {this.indCustomerSave = response})
+    
+
+   
+    this.store.select(corpCustomerSelector).subscribe(response => {this.corpCustomerSave = response})
+   
  
   }
 
    saveCustomer(){
 
+    this.store.select(serviceSelector).subscribe(response => {
+      this.serviceSave = response})
+    
+    
+
     
     if(this.corpCustomerSave){
+
      let customerId = Math.round(Math.random()*100);
 
       this.customerService.addCorporateCustomer({...this.corpCustomerSave, customerId: customerId})
-      .subscribe(response => {
-        this.store.dispatch(resetCustomerState());  // Save işleminden sonra var olan state bir sonraki kayıt işlmei için sıfırlanır...   
-        this.deneme = response;
+        .subscribe(response => { this.store.dispatch(resetCustomerState());  // Save işleminden sonra var olan state bir sonraki kayıt işlmei için sıfırlanır...   
+        
         this.toastr.success('Customer başarıyla eklendi')
       }, this.catchError)
 
@@ -70,31 +70,26 @@ export class CreateCustomerstp3Component implements OnInit {
         .subscribe(response => {
           
           this.customerService.addInvoices(response.id).subscribe(response => {
-            this.deneme3 = response
             
           }, this.catchError)
         }, this.catchError);
-        
-    
-        this.router.navigate(['/customers']);
     }
     if(this.indCustomerSave){
+
       const customerId = Math.round(Math.random()*100);
+
       this.customerService.addIndividualCustomer({...this.indCustomerSave, customerId: customerId})
-      .subscribe(response => {
-        this.store.dispatch(resetCustomerState());   // Save işleminden sonra var olan state bir sonraki kayıt işlmei için sıfırlanır...
-        this.deneme2 = response
-        this.toastr.success('Customer başarıyla eklendi')
+      .subscribe(response => { this.store.dispatch(resetCustomerState());   // Save işleminden sonra var olan state bir sonraki kayıt işlmei için sıfırlanır...
+       
+      this.toastr.success('Customer başarıyla eklendi')
       }, this.catchError)
 
        this.customerService.addSubscriptions(customerId, this.selectedService.id)
         .subscribe(response => {
           this.customerService.addInvoices(response.id).subscribe(response => {
-            this.deneme3 = response;
           }, this.catchError)
         }, this.catchError);
 
-        this.router.navigate(['/customers']);
     }
   
     this.toastr.success(  "New Customer Created")
