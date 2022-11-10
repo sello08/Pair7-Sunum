@@ -1,7 +1,7 @@
 
 
 import { Component, OnInit } from '@angular/core';
-import {  Service, ServicesService } from 'src/libs';
+import { Service, ServicesService, CustomersService } from 'src/libs';
 import { Store } from '@ngrx/store';
 import {  setService } from '../../../../store/customer.actions';
 import { Router } from '@angular/router';
@@ -22,6 +22,7 @@ export class CreateCustomerstp2Component implements OnInit {
 
   constructor(
     private servicesService : ServicesService,
+    private customerService : CustomersService,
     private store : Store, 
     private router: Router, 
     private toastr :ToastrService,
@@ -44,8 +45,8 @@ getService(){
 })
 }
 
-  selectedSer(s:Service){
-    this.selectedService=s;
+  selectedSer(service:Service){
+    this.selectedService=service;
     this.toastr.success(this.selectedService.name, "seçildi");
     this.valid=true;
 

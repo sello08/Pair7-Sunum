@@ -9,17 +9,17 @@
         <div class="list-group mx-0 w-auto">
           <label
             class="list-group-item d-flex gap-2"
-            *ngFor="let i of services"
+            *ngFor="let service of services"
           >
             <br />
-            <li type="button" (click)="selectedSer(i)">
+            <li type="button" (click)="selectedSer(service)">
               <input
                 class="form-check-input flex-shrink-0"
                 type="radio"
                 name="listGroupRadios"
                 id="listGroupRadios1"
               />
-              {{ i.id }}- {{ i.name }}
+              {{ service.id }}- {{ service.name }}
             </li>
             <br />
           </label>

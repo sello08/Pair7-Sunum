@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CreateCustomerstp3Component implements OnInit {
 
  
-  selectedService !: Service   ;
+  selectedService !: number | undefined  ;
   serviceSave  !: Service | null;
   indCustomerSave  !: IndividualCustomers | null
   corpCustomerSave  !: CorporateCustomers | null
@@ -26,7 +26,7 @@ export class CreateCustomerstp3Component implements OnInit {
     private store : Store, 
     private router: Router, 
     private customerService:CustomersService, 
-    private toastr :ToastrService
+    private toastr :ToastrService,
     ) { }
 
   ngOnInit(): void {
@@ -51,44 +51,47 @@ export class CreateCustomerstp3Component implements OnInit {
    saveCustomer(){
 
     this.store.select(serviceSelector).subscribe(response => {
-      this.serviceSave = response})
+      this.selectedService = response?.id})
     
     
 
     
     if(this.corpCustomerSave){
 
-     let customerId = Math.round(Math.random()*100);
+     let customerId = Math.round(Math.random()*100000);
 
       this.customerService.addCorporateCustomer({...this.corpCustomerSave, customerId: customerId})
         .subscribe(response => { this.store.dispatch(resetCustomerState());  // Save işleminden sonra var olan state bir sonraki kayıt işlmei için sıfırlanır...   
         
         this.toastr.success('Customer başarıyla eklendi')
       }, this.catchError)
-
-      this.customerService.addSubscriptions(customerId, this.selectedService.id)
+      if(this.selectedService){
+        this.customerService.addSubscriptions(customerId, this.selectedService)
         .subscribe(response => {
           
           this.customerService.addInvoices(response.id).subscribe(response => {
             
           }, this.catchError)
-        }, this.catchError);
+        }, this.catchError);}
+      
     }
     if(this.indCustomerSave){
 
-      const customerId = Math.round(Math.random()*100);
+      const customerId = Math.round(Math.random()*100000);
 
       this.customerService.addIndividualCustomer({...this.indCustomerSave, customerId: customerId})
       .subscribe(response => { this.store.dispatch(resetCustomerState());   // Save işleminden sonra var olan state bir sonraki kayıt işlmei için sıfırlanır...
        
       this.toastr.success('Customer başarıyla eklendi')
       }, this.catchError)
-
-       this.customerService.addSubscriptions(customerId, this.selectedService.id)
+      if(this.selectedService){
+        this.customerService.addSubscriptions(customerId, this.selectedService)
         .subscribe(response => {
           this.customerService.addInvoices(response.id).subscribe(response => {
           }, this.catchError)
         }, this.catchError);
+      }
+       
 
     }
   

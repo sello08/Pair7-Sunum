@@ -1,3 +1,4 @@
+import { Service } from 'src/libs';
 
 
 import { HttpClient } from '@angular/common/http';
@@ -82,7 +83,6 @@ export class CustomersService {
 
   addSubscriptions(id: number, serviceId : number | undefined):Observable<Subscription>{
 
-
     const data = { customerId: id ,serviceId: serviceId , dateStarted: this.newdate }
     
     return this.http.post<Subscription>('http://localhost:3000/subscriptions', data)
@@ -90,13 +90,12 @@ export class CustomersService {
 
   addInvoices(id: number ):Observable<Invoice>{
 
-    
-
-
     const data = { subscriptionId: id , dateCreated: this.newdate, dateDue: this.subNewDate}
 
     return this.http.post<Invoice>('http://localhost:3000/invoices', data)
   }
+
+
 
   
 

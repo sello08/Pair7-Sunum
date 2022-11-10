@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CreateCustomerstp1Component implements OnInit {
 
 
-  customerType :boolean=true
+   customerType :boolean=true
    activeForm:boolean=true;
    indCustomerForm! : FormGroup
    corpCustomerForm! : FormGroup
