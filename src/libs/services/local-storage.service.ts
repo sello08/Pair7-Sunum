@@ -20,10 +20,7 @@ export class LocalStorageService {
   AllToken(){
     localStorage.clear();
   }
-  logut() {
-    localStorage.removeItem("token");
-    this.router.navigate(['/']);
-  }
+ 
   
 
 

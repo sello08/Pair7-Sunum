@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="row" *ngIf="customerType">
+    <div class="col-3">
+      <br />
+      <br />
+      <a (click)="typeSelection(true)">
+        <img src="../../../../../assets/image/2074146 (1).png" width="30px" />
+        Individual Customers
+      </a>
+      <br />
+      <br />
+      <a (click)="typeSelection(false)">
+        <img src="../../../../../assets/image/2074146 (1).png" width="30px" />
+        Corporate Customers
+      </a>
+    </div>
+    <div class="col-6 round3">
+      <div *ngIf="activeForm" class="customer-Form1">
+        <form [formGroup]="individualForm">
+          <igx-input-group>
+            <input igxInput type="text" formControlName="firstName" />
+            <label igxLabel>First Name</label>
+          </igx-input-group>
+          <igx-input-group>
+            <label igxLabel>Last Name</label>
+            <input igxInput type="text" formControlName="lastName"
+          /></igx-input-group>
+          <igx-input-group>
+            <label igxLabel>National ID</label>
+            <input igxInput type="number" formControlName="nationalIdentity"
+          /></igx-input-group>
+          <igx-input-group>
+            <!-- <label igxLabel>Birth Date</label> -->
+            <input igxInput type="date" formControlName="birthDate"
+          /></igx-input-group>
+          <br />
+          <button
+            class="button is-normal button is-link is-light"
+            type="submit"
+            [disabled]="!individualForm.valid"
+            (click)="addIndCustomer()"
+          >
+            Next
+          </button>
+        </form>
+      </div>
+
+      <div *ngIf="!activeForm" class="customer-Form2">
+        <form [formGroup]="corporateForm">
+          <igx-input-group>
+            <label igxLabel>Company Name</label>
+            <input igxInput type="text" formControlName="companyName" />
+          </igx-input-group>
+          <igx-input-group>
+            <label igxLabel>Tax Number</label>
+            <input
+              igxInput
+              class="tax-input"
+              type="number"
+              formControlName="taxNumber"
+            />
+          </igx-input-group>
+          <br />
+          <button
+            type="submit"
+            [disabled]="!corporateForm.valid"
+            (click)="addCorpCustomer()"
+          >
+            next
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="col-3"></div>
+  </div>
+</div>

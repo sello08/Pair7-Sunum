@@ -17,7 +17,7 @@ import {
 @NgModule({
   declarations: [
     LoginComponent,
-AuthComponent
+    AuthComponent
   ],
   imports: [
     CommonModule,

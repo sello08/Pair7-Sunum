@@ -24,6 +24,7 @@ import { DetailCustomerComponent } from './component/detail-customer/detail-cust
 import { StoreModule } from '@ngrx/store';
 import { customerReducer } from './store/customer.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { JwtModule } from '@auth0/angular-jwt';
 
 
 //STORE
@@ -36,7 +37,7 @@ import { environment } from 'src/environments/environment';
     SpinnerComponent,
     NotFoundComponent,
     HomeComponent,
-  DetailCustomerComponent
+    DetailCustomerComponent
 
   ],
   imports: [
@@ -70,6 +71,14 @@ import { environment } from 'src/environments/environment';
       
       StoreDevtoolsModule.instrument({
         autoPause: false, // Pauses recording actions and state changes when the extension window is not open
+      }),
+
+      JwtModule.forRoot({
+        config: {
+          tokenGetter: () => {
+            return localStorage.getItem('token');
+          },
+        },
       }),
     
   ],

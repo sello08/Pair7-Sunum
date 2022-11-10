@@ -1,0 +1,13 @@
+.round3 {
+    min-height: 400px;
+    min-width: 400px;
+    margin-top: 50px;
+    border: 2px solid rgb(80, 74, 168);
+    border-radius: 12px;
+    padding: 5px;
+    background-color: rgba(253, 251, 251, 0.877);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }

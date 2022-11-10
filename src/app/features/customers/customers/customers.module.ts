@@ -10,17 +10,21 @@ import { CreateCustomerComponent } from '../create-customer/create-customer.comp
 import {
   IgxButtonModule,
   IgxIconModule,
-  IgxInputGroupModule,
   IgxDatePickerModule ,
-  IgxRadioModule 
+  IgxRadioModule ,
+  IgxInputGroupModule,
 } from "igniteui-angular";
+
+import { CreateCustomerstp2Component } from '../createStep/create-customerstp2/create-customerstp2.component';
+import { CreateCustomerstp3Component } from '../createStep/create-customerstp3/create-customerstp3.component';
+import { CreateCustomerstp1Component } from '../createStep/create-customerstp1/create-customerstp1.component';
+
 
 
 @NgModule({
   declarations: [
 
     CustomersComponent,
-    
     FirtNamePipe,
     LastNamePipe,
     CustomerIdPipe,
@@ -28,6 +32,10 @@ import {
     CompanyNamePipe,
     BirthDatePipe,
     CreateCustomerComponent,
+  
+    CreateCustomerstp1Component,
+    CreateCustomerstp2Component,
+    CreateCustomerstp3Component,
 
 
   ],

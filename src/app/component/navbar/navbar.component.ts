@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import {  LocalStorageService} from 'src/libs';
+import { LocalStorageService, AuthService } from 'src/libs';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +9,7 @@ import {  LocalStorageService} from 'src/libs';
 })
 export class NavbarComponent implements OnInit {
   isAuthenticated: boolean =false;
-  constructor(private local:LocalStorageService, private toastr:ToastrService) { 
+  constructor(private local:LocalStorageService, private toastr:ToastrService, private authService:AuthService) { 
 
   }
   
@@ -19,14 +19,15 @@ ngOnInit(): void {
   }
 
   loggedin(){
-    return this.local.getToken();
+    return this.authService.isAuthenticated
   }
  
   onLogut() {
-   this.local.logut();
-    this.isAuthenticated=false;
-    console.log("token silindi")
-    this.toastr.warning("Token Deleted")
+      this.authService.logoutToken();
+      this.isAuthenticated=this.authService.isAuthenticated;
+      console.log("token silindi")
+      this.toastr.warning("Token Deleted")
+      
   }
 
 

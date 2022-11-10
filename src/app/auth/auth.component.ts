@@ -1,3 +1,6 @@
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { CustomerState } from './../store/customer.reducer';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -8,6 +11,7 @@ import {
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService,LocalStorageService,Users} from 'src/libs';
+import { setTokenUserModel } from '../store/customer.actions';
 
 @Component({
   selector: 'app-auth',
@@ -17,25 +21,28 @@ import { AuthService,LocalStorageService,Users} from 'src/libs';
 export class AuthComponent implements OnInit {
   [x: string]: any;
 
- users!:Users[];
+  users!:Users[];
   isLoginMode: boolean = false;
-  // loading: boolean = false;
-  // error: string="";
-
   authForm!: FormGroup;
-
   userName: string = "";
   password: string = "";
   error: string = '';
+  UserModel$!: Observable<Users | null>
+  userInfo!:Users
 
   constructor(private formBuilder: FormBuilder,
      private authService: AuthService,
       private localStorageService: LocalStorageService, 
       private router: Router,
-      private toastr: ToastrService
-      ) { }
+      private toastr: ToastrService,
+      private store:Store <CustomerState>) {this.UserModel$= this.store.select((s) => s.UserModel); }
 
   ngOnInit(): void {
+
+    this.UserModel$.subscribe((res)=>{
+      if(res!=null)this.userInfo=res;
+  
+      })
     this.autForms();
     this.getUser();
 
@@ -76,6 +83,7 @@ export class AuthComponent implements OnInit {
       }
       this.authService.login(auth).subscribe({
         next: (response) => {
+          this.saveState();
           console.info(`başarılı`, response);
           this.toastr.success("Login successful")
           this.localStorageService.setToken(response.access_token)
@@ -129,5 +137,14 @@ export class AuthComponent implements OnInit {
     }
  
   }
+  }
+  saveState(){
+    if(!this.authForm.valid)return ;
+    //dispatch
+    this.store.dispatch(
+      setTokenUserModel({UserModel:this.authForm.value})
+    )
+   
+
   }
 }

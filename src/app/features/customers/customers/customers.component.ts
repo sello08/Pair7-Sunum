@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { stripe } from '@igniteui/material-icons-extended';
-import { Subscription } from 'src/libs';
 import { CorporateCustomers } from 'src/libs/models/corporate-customers';
 import { Customer } from 'src/libs/models/customer';
 import { IndividualCustomers } from 'src/libs/models/individual-customers';
@@ -84,7 +82,7 @@ export class CustomersComponent implements OnInit {
   }
   
   createCustomers(){
-    this.router.navigate(['/customers/createCustomer'])
+    this.router.navigate(['/customers/stp1'])
   }
 
 
