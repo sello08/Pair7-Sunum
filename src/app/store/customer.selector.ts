@@ -1,4 +1,4 @@
-import { CustomerState } from './customer.reducer';
+import { CustomerState, initialState } from './customer.reducer';
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 
 
@@ -24,4 +24,3 @@ export const serviceSelector = createSelector(
         return state.service
     }
 )
-

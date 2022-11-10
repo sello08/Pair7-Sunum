@@ -1,6 +1,5 @@
-
 import { on, createReducer } from '@ngrx/store';
-import { deleteTokenUserModel, setCorporateCustomer, setIndividualCustomer, setService, setTokenUserModel, getInitialStore } from './customer.actions';
+import { deleteTokenUserModel, setCorporateCustomer, setIndividualCustomer, setService, setTokenUserModel, resetCustomerState } from './customer.actions';
 import { IndividualCustomers } from 'src/libs/models/individual-customers';
 import { CorporateCustomers } from 'src/libs/models/corporate-customers';
 import { Service } from '../../libs/models/service';
@@ -40,7 +39,12 @@ export const customerReducer = createReducer(
             service: service
         }
     }),
-    
+    on(resetCustomerState, (state) => {
+      
+      return {
+       ...initialState
+      }
+  }),
     on(
         setTokenUserModel, 
         (currentState, action) => {

@@ -1,8 +1,6 @@
-
+import { resetCustomerState } from './../../../../store/customer.actions';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CorporateCustomers, CustomersService, IndividualCustomers, Invoice, Service, ServicesService } from 'src/libs';
-
 import { Store } from '@ngrx/store';
 import {  Observable } from 'rxjs';
 import { indCustomerSelector, corpCustomerSelector, serviceSelector,  } from '../../../../store/customer.selector';
@@ -33,7 +31,6 @@ export class CreateCustomerstp3Component implements OnInit {
   
 
   constructor(
-    private servicesService : ServicesService,
     private store : Store, 
     private router: Router, 
     private customerService:CustomersService, 
@@ -59,11 +56,12 @@ export class CreateCustomerstp3Component implements OnInit {
    saveCustomer(){
 
     
-    if(this.corpCustomerSave!==null){
+    if(this.corpCustomerSave){
      let customerId = Math.round(Math.random()*100);
 
       this.customerService.addCorporateCustomer({...this.corpCustomerSave, customerId: customerId})
       .subscribe(response => {
+        this.store.dispatch(resetCustomerState());  // Save işleminden sonra var olan state bir sonraki kayıt işlmei için sıfırlanır...   
         this.deneme = response;
         this.toastr.success('Customer başarıyla eklendi')
       }, this.catchError)
@@ -80,10 +78,11 @@ export class CreateCustomerstp3Component implements OnInit {
     
         this.router.navigate(['/customers']);
     }
-    if(this.indCustomerSave!==null){
+    if(this.indCustomerSave){
       const customerId = Math.round(Math.random()*100);
       this.customerService.addIndividualCustomer({...this.indCustomerSave, customerId: customerId})
       .subscribe(response => {
+        this.store.dispatch(resetCustomerState());   // Save işleminden sonra var olan state bir sonraki kayıt işlmei için sıfırlanır...
         this.deneme2 = response
         this.toastr.success('Customer başarıyla eklendi')
       }, this.catchError)
@@ -98,11 +97,15 @@ export class CreateCustomerstp3Component implements OnInit {
         this.router.navigate(['/customers']);
     }
   
+    
+
+
 
     this.toastr.success(  "New Customer Created")
     this.router.navigate(['/customers/stp3']);
 
-    
+
+
   }
 
   catchError(error: Error) {
